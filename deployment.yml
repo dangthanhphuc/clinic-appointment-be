@@ -1,0 +1,55 @@
+
+services: 
+  mysql-container:
+    container_name: mysql-container
+    image: mysql:9.0.1
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./initial_database.sql:/docker-entrypoint-initdb.d/initial_database.sql
+    networks:
+      - back-tier
+
+  phpmyadmin-container:
+    container_name: phpmyadmin-container
+    restart: on-failure
+    image: phpmyadmin:5.2.1
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql-container
+      PMA_PORT: 3306
+    networks:
+      - back-tier
+    depends_on:
+      - mysql-container
+  
+  clinic-appointment-backend-container:
+    container_name: clinic-appointment-backend-container
+    build:
+      dockerfile: Dockerfile
+    image: phucdang01235/clinic-appointment-backend-image:1.20.3
+    restart: on-failure
+    ports:
+      - 8088:8088
+    depends_on:
+      - mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/clinic_appointment?createDatabaseIfNotExist=true
+    networks:
+      - back-tier
+
+volumes:
+  mysql-data:
+   name: mysql-data
+   external: true
+  
+networks:
+  front-tier:
+  back-tier:
+
