@@ -2,17 +2,14 @@ package com.example.clinic_appointment.controllers;
 
 import com.example.clinic_appointment.dtos.LoginDTO;
 
-import com.example.clinic_appointment.dtos.RegisterPatientDTO;
-import com.example.clinic_appointment.entities.Patient;
 import com.example.clinic_appointment.entities.User;
 import com.example.clinic_appointment.enums.UserType;
+import com.example.clinic_appointment.exceptions.LockedException;
 import com.example.clinic_appointment.exceptions.UsernameNotFoundException;
 import com.example.clinic_appointment.responses.LoginResponse;
-import com.example.clinic_appointment.responses.PatientResponse;
 import com.example.clinic_appointment.responses.ResponseObject;
 import com.example.clinic_appointment.responses.UserResponse;
 import com.example.clinic_appointment.services.user.IUserService;
-import com.example.clinic_appointment.services.user.UserService;
 import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +27,7 @@ public class UserController {
     private final IUserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseObject> login(@RequestBody LoginDTO loginDTO) throws UsernameNotFoundException {
+    public ResponseEntity<ResponseObject> login(@RequestBody LoginDTO loginDTO) throws UsernameNotFoundException, LockedException {
         String token = userService.login(loginDTO);
         User userDetails = userService.getUserDetailsFromToken(token, loginDTO.getUserType());
 

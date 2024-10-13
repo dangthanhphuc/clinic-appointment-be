@@ -28,6 +28,20 @@ public class GlobalExceptionHandle {
                 );
     }
 
+    @ExceptionHandler(LockedException.class)
+    public ResponseEntity<ResponseObject> handleLockedException(LockedException ex) {
+        return ResponseEntity
+                .status(LOCKED)
+                .body(
+                        ResponseObject.builder()
+                                .timeStamp(LocalDateTime.now())
+                                .message(ex.getMessage())
+                                .status(LOCKED)
+                                .statusCode(LOCKED.value())
+                                .build()
+                );
+    }
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ResponseObject> handleUsernameNotFoundException(UsernameNotFoundException ex) {
         return ResponseEntity.status(BAD_REQUEST).body(
