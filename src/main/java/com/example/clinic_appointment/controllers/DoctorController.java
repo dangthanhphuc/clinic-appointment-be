@@ -39,7 +39,6 @@ public class DoctorController {
                 ResponseObject.builder()
                         .timeStamp(LocalDateTime.now())
                         .status(OK)
-                        .statusCode(OK.value())
                         .message("Get doctors successfully !")
                         .data(doctors.stream().map(DoctorResponse::fromDoctor).toList())
                         .build()

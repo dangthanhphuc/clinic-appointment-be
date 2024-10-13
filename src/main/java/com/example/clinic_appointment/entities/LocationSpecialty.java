@@ -1,6 +1,6 @@
 package com.example.clinic_appointment.entities;
 
-import com.example.clinic_appointment.entities.ids.MedicalFacilitySpecialtyId;
+import com.example.clinic_appointment.entities.ids.LocationSpecialtyId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "medical_facility_specialties")
-public class MedicalFacilitySpecialty {
+@Table(name = "location_specialties")
+public class LocationSpecialty {
 
     @EmbeddedId
-    private MedicalFacilitySpecialtyId medicalFacilitySpecialtyId;
+    private LocationSpecialtyId locationSpecialtyId;
 
 }

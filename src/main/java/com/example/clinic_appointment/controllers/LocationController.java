@@ -32,7 +32,6 @@ public class LocationController {
                 ResponseObject.builder()
                         .timeStamp(LocalDateTime.now())
                         .status(OK)
-                        .statusCode(OK.value())
                         .message("Get locations successfully !")
                         .data(locations.stream().map(LocationResponse::fromLocation).toList())
                         .build()

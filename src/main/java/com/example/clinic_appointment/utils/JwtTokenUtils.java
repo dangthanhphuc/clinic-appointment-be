@@ -41,7 +41,7 @@ public class JwtTokenUtils {
 
         return Jwts.builder()
                 .claims(claims)
-                .subject(user.getUserName())
+                .subject(user.getUsername())
                 .issuer("https://localhost:8088")
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiration * 1000L))
@@ -66,7 +66,7 @@ public class JwtTokenUtils {
         return extractClaimFromToken(token, Claims::getExpiration).before(new Date());
     }
 
-    public String getUsernameFromToken (String token) {
+    public String getSubject (String token) {
         return extractClaimFromToken(token, Claims::getSubject);
     }
 
