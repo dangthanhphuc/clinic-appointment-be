@@ -3,7 +3,9 @@ package com.example.clinic_appointment.services.user;
 import com.example.clinic_appointment.dtos.LoginDTO;
 
 import com.example.clinic_appointment.entities.User;
+import com.example.clinic_appointment.enums.UserStatus;
 import com.example.clinic_appointment.enums.UserType;
+import com.example.clinic_appointment.exceptions.LockedException;
 import com.example.clinic_appointment.exceptions.UserTypeNotFoundException;
 import com.example.clinic_appointment.exceptions.UsernameNotFoundException;
 import com.example.clinic_appointment.repositories.DoctorRepo;
@@ -57,8 +59,13 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String login(LoginDTO loginDTO) throws UsernameNotFoundException {
+    public String login(LoginDTO loginDTO) throws UsernameNotFoundException, LockedException {
+
         User existingUser = getUserDetailFromUsername(loginDTO.getUsername(), loginDTO.getUserType());
+
+        if(existingUser.getStatus() == UserStatus.INACTIVE) {
+            throw new LockedException("User account is locked!" + existingUser.getUsername() + "!");
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword(),
