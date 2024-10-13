@@ -15,6 +15,7 @@ public class LocationService implements ILocationService{
 
     @Override
     public List<Location> locations() {
+
         return locationRepo.findAll();
     }
 }

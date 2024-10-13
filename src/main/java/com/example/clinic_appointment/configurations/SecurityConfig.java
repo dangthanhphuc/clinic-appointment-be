@@ -1,14 +1,10 @@
 package com.example.clinic_appointment.configurations;
 
-import com.example.clinic_appointment.repositories.UserRepo;
-import jakarta.persistence.EntityManagerFactory;
+import com.example.clinic_appointment.entities.Doctor;
+import com.example.clinic_appointment.entities.Patient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,15 +14,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.TransactionManager;
 
-import javax.sql.DataSource;
+import com.example.clinic_appointment.repositories.DoctorRepo;
+import com.example.clinic_appointment.repositories.PatientRepo;
+
+import java.util.Optional;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserRepo userRepo;
+    private final DoctorRepo doctorRepo;
+    private final PatientRepo patientRepo;
 
     // Khởi tạo trình cung cấp xác thực
     @Bean
@@ -50,13 +49,19 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        return username ->
-                (UserDetails) userRepo.findByUsername(username)
-                        .orElseThrow(
-                                () -> new UsernameNotFoundException("Username not found !")
-                        );
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            Optional<Doctor> doctor = doctorRepo.findByUsername(username);
+            if (doctor.isPresent()) {
+                return doctor.get();
+            }
+
+            Optional<Patient> patient = patientRepo.findByUsername(username);
+            if (patient.isPresent()) {
+                return patient.get();
+            }
+
+            throw new UsernameNotFoundException("Username not found!");
+        };
     }
-
-
 }

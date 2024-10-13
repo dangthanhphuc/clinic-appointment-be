@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@Builder
 public class UserResponse {
     private Long id;
     private String username;
@@ -27,14 +27,13 @@ public class UserResponse {
     @JsonProperty("date_of_birth")
     private LocalDate dateOfBirth;
     private boolean gender;
-    private String type;
     private UserStatus status;
     private RoleResponse role;
 
     public static UserResponse fromUser(User user){
         return UserResponse.builder()
                 .id(user.getId())
-                .username(user.getUserName())
+                .username(user.getUsername())
                 .imgUrl(user.getImgUrl())
                 .email(user.getEmail())
                 .name(user.getName())
@@ -42,7 +41,6 @@ public class UserResponse {
                 .phoneNumber(user.getPhoneNumber())
                 .dateOfBirth(user.getDateOfBirth())
                 .gender(user.isGender())
-                .type(user.getType())
                 .status(user.getStatus())
                 .role(RoleResponse.fromRole(user.getRole()))
                 .build();

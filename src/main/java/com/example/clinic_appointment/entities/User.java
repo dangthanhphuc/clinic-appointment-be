@@ -7,26 +7,22 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Formula;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.time.LocalDate;
 
-@Setter
 @Getter
-@Entity
-@SuperBuilder
+@Setter
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class User implements UserDetails{
+@SuperBuilder
+public abstract class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
-    private String userName;
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -52,15 +48,13 @@ public abstract class User implements UserDetails{
     @Column(name = "gender", nullable = false)
     private boolean gender;
 
-    @Formula("type")
-    private String type;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private UserStatus status;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
 
+    // Implement UserDetails methods here
 }
