@@ -9,14 +9,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
+@Entity
+@Table(name = "doctors")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Entity
-@Table(name = "doctors")
-@DiscriminatorValue("DOCTOR")
 public class Doctor extends User {
 
     @Column(name = "position", nullable = false)
@@ -25,7 +24,7 @@ public class Doctor extends User {
     @Column(name = "years_of_experience", nullable = false)
     private int yearsOfExperience;
     
-    @Column(name = "introduce", nullable = false)
+    @Column(name = "introduce")
     private String introduce;
 
     @ManyToOne(optional = false)
@@ -35,11 +34,6 @@ public class Doctor extends User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return getUserName();
     }
 
 }

@@ -24,9 +24,43 @@ public class GlobalExceptionHandle {
                                 .timeStamp(LocalDateTime.now())
                                 .message(ex.getMessage())
                                 .status(NOT_FOUND)
-                                .statusCode(NOT_FOUND.value())
                                 .build()
                 );
     }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ResponseObject> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        return ResponseEntity.status(BAD_REQUEST).body(
+                ResponseObject.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                        .status(NOT_FOUND)
+                        .build()
+        );
+    }
+
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<ResponseObject> handleDataNotFoundException(DataNotFoundException ex) {
+        return ResponseEntity.status(BAD_REQUEST).body(
+                ResponseObject.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                        .status(NOT_FOUND)
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(UserTypeNotFoundException.class)
+    public ResponseEntity<ResponseObject> handleUserTypeNotFoundException(UserTypeNotFoundException ex) {
+        return ResponseEntity.status(BAD_REQUEST).body(
+                ResponseObject.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                        .status(NOT_FOUND)
+                        .build()
+        );
+    }
+
 
 }

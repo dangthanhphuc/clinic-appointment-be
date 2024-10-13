@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ResponseObject {
     private LocalDateTime timeStamp;
-    private int statusCode;
     private HttpStatus status;
+    private int statusCode;
     private String message;
     private Object data;
 }
