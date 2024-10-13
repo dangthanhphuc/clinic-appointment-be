@@ -18,6 +18,43 @@ USE `clinic_appointment`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `admins`
+--
+
+DROP TABLE IF EXISTS `admins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admins` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `date_of_birth` date NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `gender` bit(1) NOT NULL,
+  `img_url` varchar(255) DEFAULT 'none.jpg',
+  `name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `status` enum('ACTIVE','INACTIVE') NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `role_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKmi8vkhus4xbdbqcac2jm4spvd` (`username`),
+  KEY `FK7h9x5fnfw47l8lkeas20rmsva` (`role_id`),
+  CONSTRAINT `FK7h9x5fnfw47l8lkeas20rmsva` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admins`
+--
+
+LOCK TABLES `admins` WRITE;
+/*!40000 ALTER TABLE `admins` DISABLE KEYS */;
+INSERT INTO `admins` VALUES (1,'Suite 59','1985-08-25','dspeachley0@alibaba.com',_binary '','none.jpg','Dun Speachley','$2a$04$UmjvIONHV74KSqgN.IIkf.WBVcSxaJWis2QDp2ydEl/F0ieZ75vQC','549-785-3771','INACTIVE','dspeachley0',4),(2,'Room 828','1984-05-01',NULL,_binary '\0','none.jpg','Maurizio Worlidge','$2a$04$.9y0LuFK5OssIud6l1Spqux3kjSl2PmZ3eENRTboulLDrybLtZ6O2',NULL,'ACTIVE','mworlidge1',4),(3,'20th Floor','1983-06-16','dsissot2@wsj.com',_binary '','none.jpg','Dyann Sissot','$2a$04$N/5Ty/QvEMYAExfauZFKq.9HE1J.45CAHOep71pj1y/lzx3avs0Hq','633-297-4589','ACTIVE','dsissot2',4),(4,'Apt 300','1993-06-18','chabbes3@cdc.gov',_binary '','none.jpg','Carlyle Habbes','$2a$04$Z3.XOYKMrtjAt2cN0kLEs.VcdT6O4ypkMFABoiCjrZnK7XIi1Rw3O','126-178-6909','INACTIVE','chabbes3',4),(5,NULL,'1982-02-06','lvedishchev4@hexun.com',_binary '\0','none.jpg','Lloyd Vedishchev','$2a$04$X707ifjF96EuFMaw10h7seVB/djPPQpyVBbV7w5NPoOIM2kWIwUmK','791-908-5611','INACTIVE','lvedishchev4',4);
+/*!40000 ALTER TABLE `admins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `appointment_types`
 --
 
@@ -416,4 +453,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-13 18:59:05
+-- Dump completed on 2024-10-13 20:55:51
