@@ -9,25 +9,18 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
 @Entity
 @Table(name = "patients")
-@DiscriminatorValue("PATIENT")
-public class Patient extends User{
-
-    private String medicalHistory;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder
+public class Patient extends User {
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
-    @Override
-    public String getUsername() {
-        return getUserName();
-    }
+
 }
