@@ -27,16 +27,15 @@ public class SpecialtyController {
     public ResponseEntity<?> getSpecialties() {
         List<Specialty> specialties = specialtyService.specialties();
 
-//        return ResponseEntity.ok().body(
-//                ResponseObject.builder()
-//                        .timeStamp(LocalDateTime.now())
-//                        .status(OK)
-//                        .statusCode(OK.value())
-//                        .message("Get specialties successfully !")
-//                        .data(specialties.stream().map(SpecialtyResponse::fromSpecialty).toList())
-//                        .build()
-//        );
-        return ResponseEntity.ok().body(specialties.stream().map(SpecialtyResponse::fromSpecialty).toList());
+        return ResponseEntity.ok().body(
+                ResponseObject.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .message("Get specialties successfully !")
+                        .data(specialties.stream().map(SpecialtyResponse::fromSpecialty).toList())
+                        .build()
+        );
     }
 
 }
