@@ -8,7 +8,7 @@ import java.util.List;
 public interface IDoctorService {
 
     List<Doctor> doctors();
-
+    Doctor doctor(Long id) throws IdNotFoundException;
     Doctor add(List<Long> ids) throws IdNotFoundException;
 
 }

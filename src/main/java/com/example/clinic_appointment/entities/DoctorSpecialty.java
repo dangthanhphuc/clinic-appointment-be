@@ -1,9 +1,7 @@
 package com.example.clinic_appointment.entities;
 
 import com.example.clinic_appointment.entities.ids.DoctorSpecialtyId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Setter
@@ -17,5 +15,13 @@ public class DoctorSpecialty {
 
     @EmbeddedId
     private DoctorSpecialtyId id;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", insertable = false, updatable = false )
+    private Doctor doctor;
+
+    @ManyToOne
+    @JoinColumn(name = "specialty_id", insertable = false, updatable = false)
+    private Specialty specialty;
 
 }

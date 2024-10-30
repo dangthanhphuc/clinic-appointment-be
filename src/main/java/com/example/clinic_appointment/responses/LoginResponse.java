@@ -17,6 +17,7 @@ public class LoginResponse {
     @JsonProperty("user_id")
     private Long userId;
 
+    @JsonProperty("user_type")
     private UserType userType;
 
     private List<String> roles;
