@@ -33,6 +33,11 @@ public class DoctorService implements IDoctorService{
         return doctorRepo.findAll();
     }
 
+    @Override
+    public Doctor doctor(Long id) throws IdNotFoundException {
+        return doctorRepo.findById(id).orElseThrow(() -> new IdNotFoundException("Doctor not found"));
+    }
+
     @Transactional(rollbackFor = IdNotFoundException.class)
     @Override
     public Doctor add(List<Long> ids) throws IdNotFoundException {

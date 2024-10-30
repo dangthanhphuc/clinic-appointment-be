@@ -31,6 +31,7 @@ public class DoctorController {
         return doctor;
     }
 
+
     @GetMapping("")
     public ResponseEntity<ResponseObject> doctors() {
         List<Doctor> doctors = doctorService.doctors();
@@ -44,6 +45,23 @@ public class DoctorController {
                         .build()
         );
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseObject> doctor(
+            @PathVariable("id") Long id
+    ) throws IdNotFoundException {
+        Doctor doctor = doctorService.doctor(id);
+
+        return ResponseEntity.ok().body(
+                ResponseObject.builder()
+                        .timeStamp(LocalDateTime.now())
+                        .status(OK)
+                        .message("Get doctors successfully !")
+                        .data(DoctorResponse.fromDoctor(doctor))
+                        .build()
+        );
+    }
+
 
 }
 
